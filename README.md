@@ -25,9 +25,24 @@ sudo pacman -S openssl
 
 OpenSSL 0.9.8 is preinstalled on OSX. Some features are only available when
 linking against OpenSSL 1.0.0 or greater; see below on how to point
-rust-openssl to a separate installation. OSX releases starting at 10.11, "El
-Capitan", no longer include OpenSSL headers which will prevent the `openssl`
-crate from compiling.
+rust-openssl to a separate installation.
+
+OSX releases starting at 10.11, "El Capitan", no longer include OpenSSL headers
+which will prevent the `openssl` crate from compiling. One way to work around
+this is to first install OpenSSL via [Homebrew](http://brew.sh/):
+
+```
+brew install openssl
+```
+
+This will not link the headers into place due to interference with the system
+OpenSSL library, and to build this crate you can then do:
+
+```
+export OPENSSL_INCLUDE_DIR=`brew --prefix openssl`/include
+export OPENSSL_LIB_DIR=`brew --prefix openssl`/lib
+cargo build
+```
 
 ### Windows
 
