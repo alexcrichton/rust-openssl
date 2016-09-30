@@ -2,7 +2,7 @@
 set -e
 
 MAX_REDIRECTS=5
-OPENSSL=openssl-1.0.2h.tar.gz
+OPENSSL=openssl-$OPENSSL_VER.tar.gz
 OUT=/tmp/$OPENSSL
 SHA1="577585f5f5d299c44dd3c993d3c0ac7a219e4949"
 
