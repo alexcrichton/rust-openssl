@@ -134,6 +134,8 @@ version: 2
 jobs:
   musl-vendored:
     <<: *JOB
+    docker:
+    - image: rust:1.21.0
     environment:
       <<: [*VENDORED, *MUSL, *BASE]
   x86_64-vendored:
