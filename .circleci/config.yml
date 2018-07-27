@@ -89,6 +89,8 @@ macos_job: &MACOS_JOB
       cargo test --manifest-path=openssl/Cargo.toml
   - *SAVE_DEPS
 
+vendored: &VENDORED
+  FEATURES: vendored
 openssl_111: &OPENSSL_111
   LIBRARY: openssl
   VERSION: 1.1.1-pre8
@@ -127,6 +129,10 @@ base: &BASE
 
 version: 2
 jobs:
+  x86_64-vendored:
+    <<: *JOB
+    environment:
+      <<: [*VENDORED, *X86_64, *BASE]
   x86_64-openssl-1.1.1:
     <<: *JOB
     environment:
@@ -143,6 +149,10 @@ jobs:
     <<: *JOB
     environment:
       <<: [*OPENSSL_101, *X86_64, *BASE]
+  i686-vendored:
+    <<: *JOB
+    environment:
+      <<: [*VENDORED, *I686, *BASE]
   i686-openssl-1.1.1:
     <<: *JOB
     environment:
@@ -155,6 +165,10 @@ jobs:
     <<: *JOB
     environment:
       <<: [*OPENSSL_102, *I686, *BASE]
+  armhf-vendored:
+    <<: *JOB
+    environment:
+      <<: [*VENDORED, *ARMHF, *BASE]
   armhf-openssl-1.1.1:
     <<: *JOB
     environment:
@@ -181,13 +195,16 @@ workflows:
   version: 2
   tests:
     jobs:
+    - x86_64-vendored
     - x86_64-openssl-1.1.1
     - x86_64-openssl-1.1.0
     - x86_64-openssl-1.0.2
     - x86_64-openssl-1.0.1
+    - i686-vendored
     - i686-openssl-1.1.1
     - i686-openssl-1.1.0
     - i686-openssl-1.0.2
+    - armhf-vendored
     - armhf-openssl-1.1.1
     - armhf-openssl-1.1.0
     - armhf-openssl-1.0.2
