@@ -92,6 +92,7 @@ macos_job: &MACOS_JOB
 
 vendored: &VENDORED
   FEATURES: vendored
+  LIBRARY: ""
 openssl_111: &OPENSSL_111
   LIBRARY: openssl
   VERSION: 1.1.1-pre8
