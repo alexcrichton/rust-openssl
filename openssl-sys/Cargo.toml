@@ -11,15 +11,16 @@ categories = ["cryptography", "external-ffi-bindings"]
 links = "openssl"
 build = "build/main.rs"
 
+[features]
+vendored = ['openssl-src']
+
 [dependencies]
 libc = "0.2"
 
 [build-dependencies]
 pkg-config = "0.3.9"
 cc = "1.0"
-
-[target.'cfg(openssl_sys_compile_vendored_openssl)'.build-dependencies]
-openssl-src = { version = '101' }
+openssl-src = { version = "110", optional = true }
 
 [target.'cfg(target_env = "msvc")'.build-dependencies]
 vcpkg = "0.2"

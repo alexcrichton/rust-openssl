@@ -2,7 +2,7 @@ extern crate cc;
 extern crate pkg_config;
 #[cfg(target_env = "msvc")]
 extern crate vcpkg;
-#[cfg(openssl_sys_compile_vendored_openssl)]
+#[cfg(feature = "vendored")]
 extern crate openssl_src;
 
 use std::collections::HashSet;
@@ -100,7 +100,7 @@ fn main() {
     }
 }
 
-#[cfg(openssl_sys_compile_vendored_openssl)]
+#[cfg(feature = "vendored")]
 mod imp {
 	use std::path::PathBuf;
 	use openssl_src;
@@ -111,7 +111,7 @@ mod imp {
 	}
 }
 
-#[cfg(not(openssl_sys_compile_vendored_openssl))]
+#[cfg(not(feature = "vendored"))]
 mod imp {
     use pkg_config;
     use std::path::{Path, PathBuf};

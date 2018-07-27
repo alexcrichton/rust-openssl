@@ -45,7 +45,7 @@ job: &JOB
   - run: ./test/build_openssl.sh
   - *SAVE_OPENSSL
   - *RESTORE_DEPS
-  - run: cargo run --manifest-path=systest/Cargo.toml --target $TARGET
+  - run: cargo run --manifest-path=systest/Cargo.toml --target $TARGET --features "$FEATURES"
   - run: |
       ulimit -c unlimited
       export PATH=$OPENSSL_DIR/bin:$PATH
@@ -55,6 +55,7 @@ job: &JOB
       cargo test \
         --manifest-path=openssl/Cargo.toml \
         --target $TARGET \
+        --features "$FEATURES" \
         $TEST_ARGS
   - run:
       command: |
@@ -80,17 +81,17 @@ macos_job: &MACOS_JOB
   - *SAVE_REGISTRY
   - run: echo "homebrew-x86_64-apple-darwin" > ~/lib_key
   - *RESTORE_DEPS
-  - run: cargo run --manifest-path=systest/Cargo.toml
+  - run: cargo run --manifest-path=systest/Cargo.toml --features "$FEATURES"
   - run: |
       PATH=/usr/local/opt/openssl/bin:$PATH
-      cargo test --manifest-path=openssl/Cargo.toml
+      cargo test --manifest-path=openssl/Cargo.toml --features "$FEATURES"
   - *SAVE_DEPS
 macos_env: &MACOS_ENV
   RUSTUP_HOME: /usr/local/rustup
   CARGO_HOME: /usr/local/cargo
 
 vendored: &VENDORED
-  RUSTFLAGS: --cfg openssl_sys_compile_vendored_openssl
+  FEATURES: vendored
   LIBRARY: ""
 openssl_111: &OPENSSL_111
   LIBRARY: openssl
