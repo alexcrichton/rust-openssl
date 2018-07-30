@@ -20,7 +20,8 @@ libc = "0.2"
 [build-dependencies]
 pkg-config = "0.3.9"
 cc = "1.0"
-openssl-src = { version = "110", optional = true }
+#openssl-src = { version = "110", optional = true }
+openssl-src = { git = 'https://github.com/alexcrichton/openssl-src-rs', optional = true }
 
 [target.'cfg(target_env = "msvc")'.build-dependencies]
 vcpkg = "0.2"
