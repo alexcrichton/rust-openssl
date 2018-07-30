@@ -114,8 +114,6 @@ libressl_270: &LIBRESSL_272
 
 x86_64: &X86_64
   TARGET: x86_64-unknown-linux-gnu
-musl: &MUSL
-  TARGET: x86_64-unknown-linux-musl
 i686: &I686
   TARGET: i686-unknown-linux-gnu
 armhf: &ARMHF
@@ -133,12 +131,6 @@ base: &BASE
 
 version: 2
 jobs:
-  musl-vendored:
-    <<: *JOB
-    docker:
-    - image: rust:1.21.0
-    environment:
-      <<: [*VENDORED, *MUSL, *BASE]
   x86_64-vendored:
     <<: *JOB
     environment:
@@ -211,7 +203,6 @@ workflows:
   version: 2
   tests:
     jobs:
-    - musl-vendored
     - x86_64-vendored
     - x86_64-openssl-1.1.1
     - x86_64-openssl-1.1.0
